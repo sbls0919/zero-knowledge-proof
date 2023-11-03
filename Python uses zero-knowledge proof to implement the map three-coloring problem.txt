@@ -1,0 +1,49 @@
+import random
+import matplotlib.pyplot as plt
+import networkx as nx
+ 
+# 初始化结点颜色
+color0='red'
+color1='yellow'
+color2='green'
+# 构造空的无向图
+graph= nx.Graph()
+# 添加结点
+node_list = [1,2,3,4,5,6]
+for i in range(0,5):
+    graph.add_node(node_list[i])
+# 添加边与颜色
+edge_list=[(1, 2), (1, 4), (1, 3), (2, 5), (3, 6), (5, 6)]
+colors=[color0,color1,color2,color1,color2,color0]
+graph.add_edges_from(edge_list)
+# 画原始图形
+nx.draw(graph, pos=nx.spring_layout(graph), with_labels=True, font_size=20, node_size=500, node_color=colors)
+plt.show()
+ 
+# 随机生成颜色函数
+def randomcolor():
+    colorArr = ['1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']
+    color = ""
+    for i in range(6):
+        color += colorArr[random.randint(0,14)]
+    return "#"+color
+ 
+# 修改颜色
+def changeColor():
+    color0=randomcolor()
+    color1=randomcolor()
+    color2=randomcolor()
+    colors = [color0, color1, color2, color1, color2, color0]
+ 
+    checknode1=int(input("请输入要查看的边连接的其中一个结点："))
+    print("颜色是",colors[checknode1-1])
+    checknode2=int(input("请输入要查看的边连接的另一个结点："))
+    print("颜色是",colors[checknode2-1])
+    color_temp = ['grey','grey','grey','grey','grey','grey']
+    color_temp[checknode1-1] = colors[checknode1-1]
+    color_temp[checknode2-1] = colors[checknode2-1]
+    nx.draw(graph, pos=nx.spring_layout(graph), with_labels=True, font_size=20, node_size=500,node_color=color_temp)
+    plt.show()
+ 
+for i in range(0,20):
+    changeColor()
